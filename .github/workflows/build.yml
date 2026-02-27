@@ -26,12 +26,19 @@ jobs:
       - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get update
+          sudo apt-get update -y
           sudo apt-get install -y \
-            libglfw3-dev libglew-dev libgl-dev \
-            libx11-dev libxcursor-dev libxrandr-dev \
-            libxinerama-dev libxi-dev libzint-dev \
-            libnlohmann-json-dev pkg-config
+            libglfw3-dev \
+            libglew-dev \
+            libgl1-mesa-dev \
+            libx11-dev \
+            libxcursor-dev \
+            libxrandr-dev \
+            libxinerama-dev \
+            libxi-dev \
+            libzint-dev \
+            libnlohmann-json-dev \
+            pkg-config
 
       - name: Install Dependencies (Windows)
         if: runner.os == 'Windows'
