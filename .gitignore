@@ -1,0 +1,11 @@
+# IDE folders
+.idea/
+cmake-build-debug/
+cmake-build-release/
+
+# Build artifacts
+bin/
+obj/
+*.o
+*.a
+*.so
