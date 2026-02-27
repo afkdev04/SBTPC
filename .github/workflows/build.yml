@@ -27,16 +27,20 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            libglfw3-dev \
-            libglew-dev \
-            libopengl0-dev \
-            libzint-dev \
-            libnlohmann-json-dev \
-            pkg-config
+          sudo apt-get install -y libglfw3-dev libglew-dev libgl1-mesa-dev libzint-dev libnlohmann-json-dev pkg-config
+
+      - name: Install Dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: vcpkg install glfw3 glew zint nlohmann-json --triplet x64-windows
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
+        run: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
+            cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_TOOLCHAIN_FILE="$VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          else
+            cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
+          fi
+        shell: bash
 
       - name: Build Project
         run: cmake --build build --config ${{ matrix.config.build_type }}
@@ -46,6 +50,5 @@ jobs:
         with:
           name: ${{ matrix.config.name }}-Binary
           path: |
-            build/SBTPC.exe
             build/SBTPC
             build/Release/SBTPC.exe
