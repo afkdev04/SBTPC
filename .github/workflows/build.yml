@@ -1,4 +1,4 @@
-ccccccccname: Cross-Platform Build
+name: Cross-Platform Build
 
 on:
   push:
@@ -26,18 +26,8 @@ jobs:
       - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get update \
-          sudo apt-get install -y \
-          libglfw3-dev \
-          libglew-dev \
-          libopengl0-dev \
-          libzint-dev \
-          nlohmann-json3-dev \
-          libx11-dev \
-          libxrandr-dev \
-          libxinerama-dev \
-          libxcursor-dev \
-          libxi-dev
+          sudo apt-get update
+          sudo apt-get install -y libglfw3-dev libglew-dev libopengl0-dev libzint-dev nlohmann-json3-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
 
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
@@ -50,5 +40,6 @@ jobs:
         with:
           name: ${{ matrix.config.name }}-Binary
           path: |
-            build/*.exe
-            build/my_app_name
+            build/SBTPC.exe
+            build/SBTPC
+            build/Release/SBTPC.exe
